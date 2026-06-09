@@ -3,6 +3,7 @@ EXPENSE = "Expense"
 transactions = []
 
 def add_transaction(transaction_type):
+    print()
     amount = float(input(f"Enter {transaction_type} amount: "))
     transaction = {"type": transaction_type, "amount": amount}
     transactions.append(transaction)
@@ -35,7 +36,9 @@ def view_balance():
     print(f"Current Balance: ${balance:.2f}")
 
 def exit_program():
+    print()
     print("Exiting...")
+    print()
 
 print("=================================")
 print("   PERSONAL FINANCE TRACKER")
@@ -48,7 +51,8 @@ while True:
     print("3. View Transactions")
     print("4. View Balance")
     print("5. Exit")
-
+    
+    print()
     option = input("Select an option: ")
 
     if option == "1":

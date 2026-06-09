@@ -1,18 +1,36 @@
+INCOME = "Income"
+EXPENSE = "Expense"
 transactions = []
 
+def add_transaction(transaction_type):
+    amount = float(input(f"Enter {transaction_type} amount: "))
+    transaction = {"type": transaction_type, "amount": amount}
+    transactions.append(transaction)
+    print(f"{transaction_type} added.")
+
 def add_income():
-    amount = input("Enter income amount: ")
-    transactions.append(amount)
-    print("Income added.")
+    add_transaction(INCOME)
 
 def add_expense():
-    print("Add expense selected.")
+    add_transaction(EXPENSE)
 
 def view_transactions():
     print("\nTransactions")
     
+    if not transactions:
+        print("No transactions recorded.")
+    else:
+        for transaction in transactions:
+            print(f"{transaction['type']} : ${transaction['amount']:.2f}")
+            
+def view_balance():
+    balance = 0
     for transaction in transactions:
-        print(transaction)
+        if transaction["type"] == INCOME:
+            balance += transaction["amount"]
+        elif transaction["type"] == EXPENSE:
+            balance -= transaction["amount"]
+    print(f"Current Balance: ${balance:.2f}")
 
 def exit_program():
     print("Exiting...")
@@ -26,7 +44,8 @@ while True:
     print("1. Add Income")
     print("2. Add Expense")
     print("3. View Transactions")
-    print("4. Exit")
+    print("4. View Balance")
+    print("5. Exit")
 
     option = input("Select an option: ")
 
@@ -37,6 +56,8 @@ while True:
     elif option == "3":
         view_transactions()
     elif option == "4":
+        view_balance()
+    elif option == "5":
         exit_program()
         break
     else:

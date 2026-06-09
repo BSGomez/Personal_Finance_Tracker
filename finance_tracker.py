@@ -3,13 +3,16 @@ transactions = []
 def add_income():
     amount = input("Enter income amount: ")
     transactions.append(amount)
-    print("income added.")
+    print("Income added.")
 
 def add_expense():
     print("Add expense selected.")
 
 def view_transactions():
-    print(transactions)
+    print("\nTransactions")
+    
+    for transaction in transactions:
+        print(transaction)
 
 def exit_program():
     print("Exiting...")

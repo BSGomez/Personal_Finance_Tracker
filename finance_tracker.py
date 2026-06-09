@@ -15,7 +15,8 @@ def add_expense():
     add_transaction(EXPENSE)
 
 def view_transactions():
-    print("\nTransactions")
+    print()
+    print("Transactions")
     
     if not transactions:
         print("No transactions recorded.")
@@ -30,6 +31,7 @@ def view_balance():
             balance += transaction["amount"]
         elif transaction["type"] == EXPENSE:
             balance -= transaction["amount"]
+    print()
     print(f"Current Balance: ${balance:.2f}")
 
 def exit_program():

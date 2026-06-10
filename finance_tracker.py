@@ -7,7 +7,11 @@ def add_transaction(transaction_type):
         print()
         try:
             amount = float(input(f"Enter {transaction_type} amount: "))
-            break
+            if amount > 0:
+                break
+            else:
+                print("Invalid amount. Please enter a number greater than 0.")
+                
         except ValueError:
             print("Invalid amount. Please enter a number.")
             

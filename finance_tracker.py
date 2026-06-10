@@ -3,8 +3,14 @@ EXPENSE = "Expense"
 transactions = []
 
 def add_transaction(transaction_type):
-    print()
-    amount = float(input(f"Enter {transaction_type} amount: "))
+    while True:
+        print()
+        try:
+            amount = float(input(f"Enter {transaction_type} amount: "))
+            break
+        except ValueError:
+            print("Invalid amount. Please enter a number.")
+            
     description = input("Enter description: ")
     transaction = {"type": transaction_type, "amount": amount, "description": description}
     transactions.append(transaction)

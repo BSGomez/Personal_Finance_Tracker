@@ -5,7 +5,8 @@ transactions = []
 def add_transaction(transaction_type):
     print()
     amount = float(input(f"Enter {transaction_type} amount: "))
-    transaction = {"type": transaction_type, "amount": amount}
+    description = input("Enter description: ")
+    transaction = {"type": transaction_type, "amount": amount, "description": description}
     transactions.append(transaction)
     print(f"{transaction_type} added.")
 
@@ -23,7 +24,7 @@ def view_transactions():
         print("No transactions recorded.")
     else:
         for transaction in transactions:
-            print(f"{transaction['type']} : ${transaction['amount']:.2f}")
+            print(f"{transaction['type']} - {transaction['description']} - ${transaction['amount']:.2f}")
             
 def view_balance():
     balance = 0

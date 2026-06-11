@@ -1,4 +1,5 @@
 import json
+from datetime import date
 
 INCOME = "Income"
 EXPENSE = "Expense"
@@ -13,6 +14,7 @@ def load_transactions():
 transactions = load_transactions()
 
 def add_transaction(transaction_type):
+    current_date = date.today().isoformat()
     while True:
         print()
         try:
@@ -26,7 +28,7 @@ def add_transaction(transaction_type):
             print("Invalid amount. Please enter a number.")
             
     description = input("Enter description: ")
-    transaction = {"type": transaction_type, "amount": amount, "description": description}
+    transaction = {"type": transaction_type, "amount": amount, "description": description, "date":current_date}
     transactions.append(transaction)
     save_transactions()
     print(f"{transaction_type} added.")
@@ -39,13 +41,38 @@ def add_expense():
 
 def view_transactions():
     print()
-    print("Transactions")
+    print("\nTransactions")
+    print("-" * 70)
+
+    print(
+        f"{'#':<4}"
+        f"{'Date':<12}"
+        f"{'Type':<10}"
+        f"{'Description':<22}"
+        f"{'Amount':>12}"
+    )
+
+    print("-" * 70)
     
     if not transactions:
         print("No transactions recorded.")
+        print("-"*70)
+        print()
     else:
-        for transaction in transactions:
-            print(f"{transaction['type']} - {transaction['description']} - ${transaction['amount']:.2f}")
+        for index, transaction in enumerate(transactions, start=1):
+            if len(transaction['description']) > 20:
+                description = transaction['description'][:17]+"..."
+            else:
+                description = transaction['description']
+                
+            print(
+                f"{index:<4}"
+                f"{transaction['date']:<12}"
+                f"{transaction['type']:<10}"
+                f"{description:<22}"
+                f"${transaction['amount']:>11.2f}"
+            )
+        print("-"*70)
             
 def view_balance():
     balance = 0

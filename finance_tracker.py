@@ -1,6 +1,16 @@
+import json
+
 INCOME = "Income"
 EXPENSE = "Expense"
-transactions = []
+
+def load_transactions():
+    try:
+        with open("transactions.json", "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return []
+
+transactions = load_transactions()
 
 def add_transaction(transaction_type):
     while True:
@@ -18,6 +28,7 @@ def add_transaction(transaction_type):
     description = input("Enter description: ")
     transaction = {"type": transaction_type, "amount": amount, "description": description}
     transactions.append(transaction)
+    save_transactions()
     print(f"{transaction_type} added.")
 
 def add_income():
@@ -45,6 +56,10 @@ def view_balance():
             balance -= transaction["amount"]
     print()
     print(f"Current Balance: ${balance:.2f}")
+
+def save_transactions():
+    with open("transactions.json", "w") as file:
+        json.dump(transactions, file, indent=4)
 
 def exit_program():
     print()

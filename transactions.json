@@ -1,0 +1,14 @@
+[
+    {
+        "type": "Income",
+        "amount": 500.0,
+        "description": "salary",
+        "date": "2026-06-13"
+    },
+    {
+        "type": "Expense",
+        "amount": 250.0,
+        "description": "gasoline",
+        "date": "2026-06-13"
+    }
+]

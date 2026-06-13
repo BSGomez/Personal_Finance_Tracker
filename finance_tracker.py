@@ -3,6 +3,7 @@ from datetime import date
 
 INCOME = "Income"
 EXPENSE = "Expense"
+TABLE_SEPARATOR = "-" * 70
 
 def load_transactions():
     try:
@@ -42,7 +43,7 @@ def add_expense():
 def view_transactions():
     print()
     print("\nTransactions")
-    print("-" * 70)
+    print(TABLE_SEPARATOR)
 
     print(
         f"{'#':<4}"
@@ -52,11 +53,11 @@ def view_transactions():
         f"{'Amount':>12}"
     )
 
-    print("-" * 70)
+    print(TABLE_SEPARATOR)
     
     if not transactions:
         print("No transactions recorded.")
-        print("-"*70)
+        print(TABLE_SEPARATOR)
         print()
     else:
         for index, transaction in enumerate(transactions, start=1):
@@ -72,7 +73,7 @@ def view_transactions():
                 f"{description:<22}"
                 f"${transaction['amount']:>11.2f}"
             )
-        print("-"*70)
+        print(TABLE_SEPARATOR)
             
 def view_balance():
     balance = 0
@@ -84,6 +85,53 @@ def view_balance():
     print()
     print(f"Current Balance: ${balance:.2f}")
 
+def view_monthly_summary():
+    summary = {}
+    
+    print()
+    print("\nMonthly Summary")
+    print(TABLE_SEPARATOR)
+
+    print(
+        f"{'Month':<12}"
+        f"{'Income':>12}"
+        f"{'Expense':>12}"
+        f"{'Net':>12}"
+    )
+    
+    print(TABLE_SEPARATOR)
+    
+    if not transactions:
+        print("No transactions recorded.")
+        print(TABLE_SEPARATOR)
+        print()
+    else:
+        for transaction in transactions:
+            month = transaction["date"][:7]
+            if month not in summary:
+                summary[month] = {
+                    INCOME: 0,
+                    EXPENSE: 0 
+                }
+            
+            if transaction["type"] == INCOME:
+                summary[month][INCOME] += transaction["amount"]
+            elif transaction["type"] == EXPENSE:
+                summary[month][EXPENSE] += transaction["amount"]
+            
+        for summary_month, data in summary.items():
+            income = f"${data[INCOME]:.2f}"
+            expense = f"${data[EXPENSE]:.2f}"
+            net = f"${data[INCOME] - data[EXPENSE]:.2f}"
+
+            print(
+                f"{summary_month:<12}"
+                f"{income:>12}"
+                f"{expense:>12}"
+                f"{net:>12}"
+            )
+        print(TABLE_SEPARATOR)
+            
 def save_transactions():
     with open("transactions.json", "w") as file:
         json.dump(transactions, file, indent=4)
@@ -93,17 +141,20 @@ def exit_program():
     print("Exiting...")
     print()
 
-print("=================================")
-print("   PERSONAL FINANCE TRACKER")
-print("=================================")
+
 
 while True:
+    print()
+    print("=================================")
+    print("   PERSONAL FINANCE TRACKER")
+    print("=================================")
     print()
     print("1. Add Income")
     print("2. Add Expense")
     print("3. View Transactions")
     print("4. View Balance")
-    print("5. Exit")
+    print("5. View Monthly Summary")
+    print("6. Exit")
     
     print()
     option = input("Select an option: ")
@@ -117,6 +168,8 @@ while True:
     elif option == "4":
         view_balance()
     elif option == "5":
+        view_monthly_summary()
+    elif option == "6":
         exit_program()
         break
     else:

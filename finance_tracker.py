@@ -148,36 +148,38 @@ def exit_program():
     print()
 
 
+def main():
+    while True:
+        print()
+        print("=================================")
+        print("   PERSONAL FINANCE TRACKER")
+        print("=================================")
+        print()
+        print("1. Add Income")
+        print("2. Add Expense")
+        print("3. View Transactions")
+        print("4. View Balance")
+        print("5. View Monthly Summary")
+        print("6. Exit")
+        
+        print()
+        option = input("Select an option: ")
 
-while True:
-    print()
-    print("=================================")
-    print("   PERSONAL FINANCE TRACKER")
-    print("=================================")
-    print()
-    print("1. Add Income")
-    print("2. Add Expense")
-    print("3. View Transactions")
-    print("4. View Balance")
-    print("5. View Monthly Summary")
-    print("6. Exit")
-    
-    print()
-    option = input("Select an option: ")
+        if option == "1":
+            add_income()
+        elif option == "2":
+            add_expense()
+        elif option == "3":
+            view_transactions()
+        elif option == "4":
+            view_balance()
+        elif option == "5":
+            view_monthly_summary()
+        elif option == "6":
+            exit_program()
+            break
+        else:
+            print("Invalid option. Please try again.")
 
-    if option == "1":
-        add_income()
-    elif option == "2":
-        add_expense()
-    elif option == "3":
-        view_transactions()
-    elif option == "4":
-        view_balance()
-    elif option == "5":
-        view_monthly_summary()
-    elif option == "6":
-        exit_program()
-        break
-    else:
-        print("Invalid option. Please try again.")
-
+if __name__ == "__main__":
+    main()

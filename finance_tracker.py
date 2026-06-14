@@ -11,6 +11,9 @@ def load_transactions():
             return json.load(file)
     except FileNotFoundError:
         return []
+    except json.JSONDecodeError:
+        print("Warning: transactions.json is corrupted.")
+        return []
 
 transactions = load_transactions()
 
@@ -41,7 +44,6 @@ def add_expense():
     add_transaction(EXPENSE)
 
 def view_transactions():
-    print()
     print("\nTransactions")
     print(TABLE_SEPARATOR)
 
@@ -83,7 +85,9 @@ def view_balance():
         elif transaction["type"] == EXPENSE:
             balance -= transaction["amount"]
     print()
+    print(TABLE_SEPARATOR)
     print(f"Current Balance: ${balance:.2f}")
+    print(TABLE_SEPARATOR)
 
 def view_monthly_summary():
     summary = {}
@@ -119,7 +123,9 @@ def view_monthly_summary():
             elif transaction["type"] == EXPENSE:
                 summary[month][EXPENSE] += transaction["amount"]
             
-        for summary_month, data in summary.items():
+        for summary_month in sorted(summary):
+            data = summary[summary_month]
+            
             income = f"${data[INCOME]:.2f}"
             expense = f"${data[EXPENSE]:.2f}"
             net = f"${data[INCOME] - data[EXPENSE]:.2f}"
